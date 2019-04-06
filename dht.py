@@ -85,15 +85,3 @@ if int(Humidity) + int(Temperature) - int(bin2dec(crc)) == 0:
 	print "Temperature:"+ Temperature +"C"
 else:
 	print "ERR_CRC"
-© 2019 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Help
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
