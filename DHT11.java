@@ -10,7 +10,7 @@ public class DHT11 {
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 		Runtime rt= Runtime.getRuntime();
-		Process p=rt.exec("python /home/pi/Desktop/dht.py");
+		Process p=rt.exec("python /home/pi/proiect/licenta-java/dht.py");
 		 BufferedReader bri = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		 if((line = bri.readLine()) != null){
 			 if(!(line.contains("ERR_CRC") || line.contains("ERR_RNG"))){
