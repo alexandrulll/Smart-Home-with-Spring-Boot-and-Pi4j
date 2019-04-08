@@ -3,11 +3,11 @@ class LedBlink {
         System.out.println("Press CTRL-C to exit");	    	
         try {			
             Runtime runTime = Runtime.getRuntime();
-            runTime.exec("gpio mode 4 out");
+            runTime.exec("gpio mode 5 out");
             while(true) {
-                runTime.exec("gpio write 4 1");
+                runTime.exec("gpio write 5 1");
                 Thread.sleep(500);
-                runTime.exec("gpio write 4 0");
+                runTime.exec("gpio write 5 0");
                 Thread.sleep(500);
             }		
         } catch (Exception e) {
