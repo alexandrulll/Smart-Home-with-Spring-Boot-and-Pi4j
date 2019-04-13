@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.example.scutaru.Licenta1ApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.171 sec - in com.example.scutaru.Licenta1ApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 7.994 sec - in com.example.scutaru.Licenta1ApplicationTests
