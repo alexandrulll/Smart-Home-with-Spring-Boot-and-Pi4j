@@ -26,17 +26,6 @@ public class RelayService {
 		return firstRelayPin.getState();
 	}
 
-	public PinState switchOffFirstRelay() throws UnsupportedBusNumberException, IOException, InterruptedException {
-
-		final GpioController gpio = GpioFactory.getInstance();
-		GpioPinDigitalOutput firstRelayPin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_26);
-		firstRelayPin.low();
-
-		gpio.shutdown();
-		gpio.unprovisionPin(firstRelayPin);
-		return firstRelayPin.getState();
-	}
-
 	public PinState switchOnSecondRelay() throws UnsupportedBusNumberException, IOException, InterruptedException {
 
 		final GpioController gpio = GpioFactory.getInstance();
@@ -46,6 +35,17 @@ public class RelayService {
 		gpio.shutdown();
 		gpio.unprovisionPin(secondRelayPin);
 		return secondRelayPin.getState();
+	}
+
+	public PinState switchOffFirstRelay() throws UnsupportedBusNumberException, IOException, InterruptedException {
+
+		final GpioController gpio = GpioFactory.getInstance();
+		GpioPinDigitalOutput firstRelayPin = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_26);
+		firstRelayPin.low();
+
+		gpio.shutdown();
+		gpio.unprovisionPin(firstRelayPin);
+		return firstRelayPin.getState();
 	}
 
 	public PinState switchOffSecondRelay() throws UnsupportedBusNumberException, IOException, InterruptedException {

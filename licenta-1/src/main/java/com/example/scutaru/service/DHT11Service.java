@@ -24,6 +24,12 @@ public class DHT11Service {
 	private final List<HumidityDTO> humidityValues = new ArrayList<>();
 	private String[] data;
 
+	private BufferedReader getInput() throws IOException {
+
+		Process process = Runtime.getRuntime().exec(COMMAND);
+		return new BufferedReader(new InputStreamReader(process.getInputStream()));
+	}
+
 	public List<Dht11DTO> getDHT11Readings() throws UnsupportedBusNumberException, IOException, InterruptedException {
 
 		Dht11DTO dht11dto = new Dht11DTO();
@@ -62,12 +68,6 @@ public class DHT11Service {
 		}
 
 		return null;
-	}
-
-	private BufferedReader getInput() throws IOException {
-
-		Process process = Runtime.getRuntime().exec(COMMAND);
-		return new BufferedReader(new InputStreamReader(process.getInputStream()));
 	}
 
 	private TemperatureDTO setTemperatureValue() {
