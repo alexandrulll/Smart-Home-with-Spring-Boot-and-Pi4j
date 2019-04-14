@@ -1,5 +1,3 @@
-package com.agilerrules.pi4j.sensors;
-
 import com.pi4j.io.gpio.GpioController;
 import com.pi4j.io.gpio.GpioFactory;
 import com.pi4j.io.gpio.GpioPinDigitalInput;
@@ -11,7 +9,7 @@ import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
 import com.pi4j.wiringpi.GpioUtil;
 
-public class PirMotionDetection {
+public class pir {
 	
 	public void detectMotionAndGlowLED(){
 		System.out.println("Starting Pi4J Motion Sensor Example"); 
@@ -56,7 +54,7 @@ public class PirMotionDetection {
 	}
 	
 	public static void main(String args[]){
-		PirMotionDetection pirMotionDetection = new PirMotionDetection();
+		pir pirMotionDetection = new pir();
 		pirMotionDetection.detectMotionAndGlowLED();
 		
 	}
