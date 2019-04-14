@@ -11,4 +11,7 @@ C:\Users\Alex\Documents\projects\licenta-1\src\main\java\com\example\scutaru\dto
 C:\Users\Alex\Documents\projects\licenta-1\src\main\java\com\example\scutaru\controller\DemoController.java
 C:\Users\Alex\Documents\projects\licenta-1\src\main\java\com\example\scutaru\service\TSLService.java
 C:\Users\Alex\Documents\projects\licenta-1\src\main\java\com\example\scutaru\service\DHT11Service.java
+C:\Users\Alex\Documents\projects\licenta-1\src\main\java\com\example\scutaru\service\ArduinoDustService.java
 C:\Users\Alex\Documents\projects\licenta-1\src\main\java\com\example\scutaru\dto\TemperatureDTO.java
+C:\Users\Alex\Documents\projects\licenta-1\src\main\java\com\example\scutaru\dto\DustSensorDTO.java
+C:\Users\Alex\Documents\projects\licenta-1\src\main\java\com\example\scutaru\controller\ArduinoDustController.java

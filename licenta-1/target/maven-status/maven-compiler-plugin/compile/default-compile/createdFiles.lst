@@ -1,7 +1,10 @@
 com\example\scutaru\dto\TemperatureDTO.class
 com\example\scutaru\controller\TSLController.class
 com\example\scutaru\controller\DHT11Controller.class
+com\example\scutaru\service\ArduinoDustService.class
 com\example\scutaru\dto\Dht11DTO.class
+com\example\scutaru\controller\ArduinoDustController.class
+com\example\scutaru\dto\DustSensorDTO.class
 com\example\scutaru\service\RelayService.class
 com\example\scutaru\constant\SensorNames.class
 com\example\scutaru\controller\PirController.class
