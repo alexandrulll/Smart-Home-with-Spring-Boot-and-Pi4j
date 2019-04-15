@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.scutaru.dto.TslDTO;
-import com.example.scutaru.service.TSLService;
+import com.example.scutaru.service.impl.TSLService;
 import com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException;
 
 @RestController

@@ -2,15 +2,13 @@ package com.example.scutaru.dto;
 
 import java.io.Serializable;
 
-import com.example.scutaru.constant.SensorNames;
-
 public class HumidityDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Double value;
 	private Long timeStamp;
-	private SensorNames sensorNames;
+	private String sensorName;
 
 	public HumidityDTO() {
 		super();
@@ -32,17 +30,17 @@ public class HumidityDTO implements Serializable {
 		this.timeStamp = timeStamp;
 	}
 
-	public SensorNames getSensorNames() {
-		return sensorNames;
+	public String getSensorName() {
+		return sensorName;
 	}
 
-	public void setSensorNames(SensorNames sensorNames) {
-		this.sensorNames = sensorNames;
+	public void setSensorName(String sensorName) {
+		this.sensorName = sensorName;
 	}
 
 	@Override
 	public String toString() {
-		return "HumidityDTO [value=" + value + ", timeStamp=" + timeStamp + ", sensorNames=" + sensorNames + "]";
+		return "HumidityDTO [value=" + value + ", timeStamp=" + timeStamp + ", sensorNames=" + sensorName + "]";
 	}
 
 }

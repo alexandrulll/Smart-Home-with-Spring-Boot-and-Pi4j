@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.scutaru.dto.Dht11DTO;
 import com.example.scutaru.dto.HumidityDTO;
 import com.example.scutaru.dto.TemperatureDTO;
-import com.example.scutaru.service.DHT11Service;
+import com.example.scutaru.service.impl.DHT11Service;
 import com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException;
 
 @RestController

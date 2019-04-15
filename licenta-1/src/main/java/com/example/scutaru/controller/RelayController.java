@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.scutaru.service.RelayService;
+import com.example.scutaru.service.impl.RelayService;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException;
 
