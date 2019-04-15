@@ -4,8 +4,6 @@ import com.pi4j.io.gpio.PinState;
 
 public interface RelayService {
 
-	PinState switchOnRelay(Integer gpioPin, Boolean isOn);
-
-	PinState switchOffRelay(Integer gpioPin);
+	PinState switchOnOffRelay(Integer gpioPin, Boolean isOn);
 	
 }

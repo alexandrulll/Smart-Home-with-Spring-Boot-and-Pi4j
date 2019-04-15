@@ -29,14 +29,6 @@ public class RelayController {
 	public ResponseEntity<PinState> switchOnRelay(@PathVariable Integer gpioPin, @PathVariable Boolean isOn)
 			throws UnsupportedBusNumberException, IOException, InterruptedException {
 
-		return new ResponseEntity<PinState>(relayService.switchOnRelay(gpioPin, isOn), HttpStatus.CREATED);
+		return new ResponseEntity<PinState>(relayService.switchOnOffRelay(gpioPin, isOn), HttpStatus.CREATED);
 	}
-
-	@PostMapping("/switch/off/{gpioPin}")
-	public ResponseEntity<PinState> switchOffRelay(@PathVariable Integer gpioPin)
-			throws UnsupportedBusNumberException, IOException, InterruptedException {
-
-		return new ResponseEntity<PinState>(relayService.switchOffRelay(gpioPin), HttpStatus.CREATED);
-	}
-
 }

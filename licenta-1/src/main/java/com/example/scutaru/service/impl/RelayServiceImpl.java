@@ -12,7 +12,7 @@ import com.pi4j.io.gpio.RaspiPin;
 @Service
 public class RelayServiceImpl implements RelayService {
 
-	public PinState switchOnRelay(Integer gpioPin, Boolean isOn) {
+	public PinState switchOnOffRelay(Integer gpioPin, Boolean isOn) {
 
 		final GpioController gpio = GpioFactory.getInstance();
 		GpioPinDigitalOutput firstRelayPin = gpio.provisionDigitalOutputPin(RaspiPin.getPinByAddress(gpioPin));
@@ -27,16 +27,5 @@ public class RelayServiceImpl implements RelayService {
 		gpio.unprovisionPin(firstRelayPin);
 
 		return firstRelayPin.getState();
-	}
-
-	public PinState switchOffRelay(Integer gpioPin) {
-
-		final GpioController gpio = GpioFactory.getInstance();
-		GpioPinDigitalOutput secondRelayPin = gpio.provisionDigitalOutputPin(RaspiPin.getPinByAddress(gpioPin));
-		secondRelayPin.low();
-
-		gpio.shutdown();
-		gpio.unprovisionPin(secondRelayPin);
-		return secondRelayPin.getState();
 	}
 }
