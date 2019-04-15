@@ -29,6 +29,6 @@ public class ArduinoDustController {
 	public ResponseEntity<List<DustSensorDTO>> getDustReadings()
 			throws UnsupportedBusNumberException, IOException, InterruptedException {
 
-		return new ResponseEntity<>(arduinoDustService.getDustReadings(), HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(arduinoDustService.getDustReadings(), HttpStatus.OK);
 	}
 }

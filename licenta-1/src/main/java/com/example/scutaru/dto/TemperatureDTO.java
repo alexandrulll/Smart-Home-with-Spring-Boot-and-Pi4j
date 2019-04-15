@@ -9,6 +9,7 @@ public class TemperatureDTO implements Serializable {
 	private Double value;
 	private Long timeStamp;
 	private String sensorName;
+	private String measureUnit;
 
 	public TemperatureDTO() {
 		super();
@@ -38,9 +39,18 @@ public class TemperatureDTO implements Serializable {
 		this.sensorName = sensorName;
 	}
 
+	public String getMeasureUnit() {
+		return measureUnit;
+	}
+
+	public void setMeasureUnit(String measureUnit) {
+		this.measureUnit = measureUnit;
+	}
+
 	@Override
 	public String toString() {
-		return "TemperatureDTO [value=" + value + ", timeStamp=" + timeStamp + ", sensorNames=" + sensorName + "]";
+		return "TemperatureDTO [value=" + value + ", timeStamp=" + timeStamp + ", sensorName=" + sensorName
+				+ ", measureUnit=" + measureUnit + "]";
 	}
 
 }

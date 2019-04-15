@@ -6,8 +6,10 @@ import java.io.InputStreamReader;
 
 import org.springframework.stereotype.Service;
 
+import com.example.scutaru.service.ConnectionService;
+
 @Service
-public class ConnectionServiceImpl {
+public class ConnectionServiceImpl implements ConnectionService {
 
 	private BufferedReader getDataFromScript(String command) throws IOException {
 
@@ -15,6 +17,7 @@ public class ConnectionServiceImpl {
 		return new BufferedReader(new InputStreamReader(process.getInputStream()));
 	}
 
+	@Override
 	public String getParamFromLine(String command) throws IOException {
 		return this.getDataFromScript(command).readLine();
 

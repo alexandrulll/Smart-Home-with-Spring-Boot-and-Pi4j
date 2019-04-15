@@ -9,6 +9,7 @@ public class HumidityDTO implements Serializable {
 	private Double value;
 	private Long timeStamp;
 	private String sensorName;
+	private String measureUnit;
 
 	public HumidityDTO() {
 		super();
@@ -38,9 +39,18 @@ public class HumidityDTO implements Serializable {
 		this.sensorName = sensorName;
 	}
 
+	public String getMeasureUnit() {
+		return measureUnit;
+	}
+
+	public void setMeasureUnit(String measureUnit) {
+		this.measureUnit = measureUnit;
+	}
+
 	@Override
 	public String toString() {
-		return "HumidityDTO [value=" + value + ", timeStamp=" + timeStamp + ", sensorNames=" + sensorName + "]";
+		return "HumidityDTO [value=" + value + ", timeStamp=" + timeStamp + ", sensorName=" + sensorName
+				+ ", measureUnit=" + measureUnit + "]";
 	}
 
 }

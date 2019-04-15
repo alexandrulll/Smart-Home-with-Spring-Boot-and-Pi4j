@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.scutaru.dto.Dht11DTO;
 import com.example.scutaru.dto.HumidityDTO;
 import com.example.scutaru.dto.TemperatureDTO;
-import com.example.scutaru.service.impl.DHT11Service;
+import com.example.scutaru.service.DHT11Service;
 import com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException;
 
 @RestController
@@ -31,20 +31,20 @@ public class DHT11Controller {
 	public ResponseEntity<List<Dht11DTO>> getDHT11Readings()
 			throws UnsupportedBusNumberException, IOException, InterruptedException {
 
-		return new ResponseEntity<>(dht11Service.getDHT11Readings(), HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(dht11Service.getDHT11Readings(), HttpStatus.OK);
 	}
 
 	@GetMapping("/temperature")
 	public ResponseEntity<List<TemperatureDTO>> getDHT11Temperature()
 			throws UnsupportedBusNumberException, IOException, InterruptedException {
 
-		return new ResponseEntity<>(dht11Service.getDHT11Temperature(), HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(dht11Service.getDHT11Temperature(), HttpStatus.OK);
 	}
 
 	@GetMapping("/humidity")
 	public ResponseEntity<List<HumidityDTO>> getDHT11Humidity()
 			throws UnsupportedBusNumberException, IOException, InterruptedException {
 
-		return new ResponseEntity<>(dht11Service.getDHT11Humidity(), HttpStatus.ACCEPTED);
+		return new ResponseEntity<>(dht11Service.getDHT11Humidity(), HttpStatus.OK);
 	}
 }

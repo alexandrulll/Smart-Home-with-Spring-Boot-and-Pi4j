@@ -9,6 +9,8 @@ public class TslDTO implements Serializable {
 	private Double fullSpectrum;
 	private Double infraredSpectrum;
 	private Double visibleSpectrum;
+	private Long timeStamp;
+	private String measureUnit;
 
 	public TslDTO() {
 		super();
@@ -38,10 +40,26 @@ public class TslDTO implements Serializable {
 		this.visibleSpectrum = visibleSpectrum;
 	}
 
+	public Long getTimeStamp() {
+		return timeStamp;
+	}
+
+	public void setTimeStamp(Long timeStamp) {
+		this.timeStamp = timeStamp;
+	}
+
+	public String getMeasureUnit() {
+		return measureUnit;
+	}
+
+	public void setMeasureUnit(String measureUnit) {
+		this.measureUnit = measureUnit;
+	}
+
 	@Override
 	public String toString() {
 		return "TslDTO [fullSpectrum=" + fullSpectrum + ", infraredSpectrum=" + infraredSpectrum + ", visibleSpectrum="
-				+ visibleSpectrum + "]";
+				+ visibleSpectrum + ", timeStamp=" + timeStamp + ", measureUnit=" + measureUnit + "]";
 	}
 
 }

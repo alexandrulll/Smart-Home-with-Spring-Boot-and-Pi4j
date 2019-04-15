@@ -5,11 +5,12 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.scutaru.service.impl.RelayService;
+import com.example.scutaru.service.RelayService;
 import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException;
 
@@ -24,31 +25,18 @@ public class RelayController {
 		this.relayService = relayService;
 	}
 
-	@PostMapping("/first-switch/on")
-	public ResponseEntity<PinState> switchOnFirstRelay()
+	@PostMapping("/{gpioPin}/{isOn}")
+	public ResponseEntity<PinState> switchOnRelay(@PathVariable Integer gpioPin, @PathVariable Boolean isOn)
 			throws UnsupportedBusNumberException, IOException, InterruptedException {
 
-		return new ResponseEntity<PinState>(relayService.switchOnFirstRelay(), HttpStatus.CREATED);
+		return new ResponseEntity<PinState>(relayService.switchOnRelay(gpioPin, isOn), HttpStatus.CREATED);
 	}
 
-	@PostMapping("/first-switch/off")
-	public ResponseEntity<PinState> switchOffFirstRelay()
+	@PostMapping("/switch/off/{gpioPin}")
+	public ResponseEntity<PinState> switchOffRelay(@PathVariable Integer gpioPin)
 			throws UnsupportedBusNumberException, IOException, InterruptedException {
 
-		return new ResponseEntity<PinState>(relayService.switchOffFirstRelay(), HttpStatus.CREATED);
+		return new ResponseEntity<PinState>(relayService.switchOffRelay(gpioPin), HttpStatus.CREATED);
 	}
 
-	@PostMapping("/second-switch/on")
-	public ResponseEntity<PinState> switchOnSecondRelay()
-			throws UnsupportedBusNumberException, IOException, InterruptedException {
-
-		return new ResponseEntity<PinState>(relayService.switchOnSecondRelay(), HttpStatus.CREATED);
-	}
-
-	@PostMapping("/second-switch/off")
-	public ResponseEntity<PinState> switchOffSecondRelay()
-			throws UnsupportedBusNumberException, IOException, InterruptedException {
-
-		return new ResponseEntity<PinState>(relayService.switchOffSecondRelay(), HttpStatus.CREATED);
-	}
 }
