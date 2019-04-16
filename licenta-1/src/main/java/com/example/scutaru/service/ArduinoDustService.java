@@ -8,4 +8,5 @@ import com.example.scutaru.dto.DustSensorDTO;
 public interface ArduinoDustService {
 
 	List<DustSensorDTO> getDustReadings() throws IOException;
+	
 }

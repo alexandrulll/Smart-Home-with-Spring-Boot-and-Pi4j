@@ -12,6 +12,7 @@ import com.pi4j.io.gpio.RaspiPin;
 @Service
 public class RelayServiceImpl implements RelayService {
 
+	@Override
 	public PinState switchOnOffRelay(Integer gpioPin, Boolean isOn) {
 
 		final GpioController gpio = GpioFactory.getInstance();

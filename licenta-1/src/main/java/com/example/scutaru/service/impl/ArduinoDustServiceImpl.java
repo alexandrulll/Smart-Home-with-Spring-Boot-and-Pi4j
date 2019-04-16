@@ -24,13 +24,13 @@ public class ArduinoDustServiceImpl implements ArduinoDustService {
 	public ArduinoDustServiceImpl(ConnectionService connectionService) {
 		this.connectionService = connectionService;
 	}
-
+	
 	@Override
 	public List<DustSensorDTO> getDustReadings() throws IOException {
 
 		List<DustSensorDTO> dustValues = new ArrayList<>();
 
-		if ((LINE = connectionService.getParamFromLine(Constants.DUST_COMMAND)) != null) {
+		if ((LINE = connectionService.getLineForSerial(Constants.DUST_COMMAND)) != null) {
 			data = LINE.split(" ");
 
 			DustSensorDTO dustSensorDTO = new DustSensorDTO();
