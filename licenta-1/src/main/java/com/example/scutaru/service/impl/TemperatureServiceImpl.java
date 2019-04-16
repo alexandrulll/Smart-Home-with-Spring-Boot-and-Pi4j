@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.scutaru.dto.AlarmDTO;
 import com.example.scutaru.dto.TemperatureDTO;
 import com.example.scutaru.service.ConnectionService;
 import com.example.scutaru.service.TemperatureService;
@@ -16,8 +17,9 @@ import com.example.scutaru.utlis.Constants;
 public class TemperatureServiceImpl implements TemperatureService {
 
 	private String LINE;
+	private final List<AlarmDTO> alarms = new ArrayList<>();
 
-	private ConnectionService connectionService;
+	private final ConnectionService connectionService;
 
 	@Autowired
 	public TemperatureServiceImpl(ConnectionService connectionService) {
@@ -32,6 +34,20 @@ public class TemperatureServiceImpl implements TemperatureService {
 			List<TemperatureDTO> temperatureValues = new ArrayList<>();
 			temperatureValues.add(this.setTemperatureValue());
 			return temperatureValues;
+		}
+
+		return null;
+	}
+
+	@Override
+	public List<AlarmDTO> getAlarms() {
+		AlarmDTO alarmDTO = new AlarmDTO();
+
+		if (this.setTemperatureValue().getValue() > Double.parseDouble("20")) {
+			alarmDTO.setGeneratingValue(String.valueOf(this.setTemperatureValue().getValue()));
+			this.alarms.add(alarmDTO);
+
+			return this.alarms;
 		}
 
 		return null;

@@ -13,7 +13,6 @@ com\example\scutaru\dto\TslDTO.class
 com\example\scutaru\service\TemperatureService.class
 com\example\scutaru\controller\RelayController.class
 com\example\scutaru\controller\TSLController.class
-com\example\scutaru\controller\MotionSensorController.class
 com\example\scutaru\service\ArduinoDustService.class
 com\example\scutaru\service\impl\ArduinoDustServiceImpl.class
 com\example\scutaru\dto\Dht11DTO.class

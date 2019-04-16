@@ -1,20 +1,12 @@
 package com.example.scutaru.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.scutaru.service.GPIOPinProviderService;
 import com.example.scutaru.service.MotionSensorService;
-import com.pi4j.io.gpio.PinState;
 import com.pi4j.io.gpio.event.GpioPinDigitalStateChangeEvent;
 import com.pi4j.io.gpio.event.GpioPinListenerDigital;
-import com.pi4j.io.gpio.trigger.GpioCallbackTrigger;
 import com.pi4j.wiringpi.GpioUtil;
 
 @Service

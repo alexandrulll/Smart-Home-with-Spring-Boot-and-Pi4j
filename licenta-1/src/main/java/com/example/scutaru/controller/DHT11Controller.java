@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.scutaru.dto.AlarmDTO;
 import com.example.scutaru.dto.Dht11DTO;
 import com.example.scutaru.dto.HumidityDTO;
 import com.example.scutaru.dto.TemperatureDTO;
@@ -53,5 +54,12 @@ public class DHT11Controller {
 			throws UnsupportedBusNumberException, IOException, InterruptedException {
 
 		return new ResponseEntity<>(humidityService.getHumidity(), HttpStatus.OK);
+	}
+
+	@GetMapping("/alarms")
+	public ResponseEntity<List<AlarmDTO>> getAlarms()
+			throws UnsupportedBusNumberException, IOException, InterruptedException {
+
+		return new ResponseEntity<>(temperatureService.getAlarms(), HttpStatus.OK);
 	}
 }
