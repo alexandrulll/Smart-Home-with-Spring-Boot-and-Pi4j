@@ -12,7 +12,7 @@ import com.example.scutaru.service.ConnectionService;
 import com.example.scutaru.service.DHT11Service;
 import com.example.scutaru.service.HumidityService;
 import com.example.scutaru.service.TemperatureService;
-import com.example.scutaru.utlis.Constants;
+import com.example.scutaru.utlis.CommandConstants;
 
 @Service
 public class DHT11ServiceImpl implements DHT11Service {
@@ -34,7 +34,7 @@ public class DHT11ServiceImpl implements DHT11Service {
 
 		List<Dht11DTO> dht11Values = new ArrayList<>();
 
-		if ((connectionService.getLine(Constants.DHT11_COMMAND)) != null) {
+		if ((connectionService.getLine(CommandConstants.DHT11_COMMAND)) != null) {
 
 			Dht11DTO dht11dto = new Dht11DTO();
 			

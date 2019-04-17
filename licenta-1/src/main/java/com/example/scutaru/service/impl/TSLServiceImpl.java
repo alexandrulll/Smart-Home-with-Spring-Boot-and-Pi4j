@@ -10,19 +10,19 @@ import org.springframework.stereotype.Service;
 import com.example.scutaru.dto.TslDTO;
 import com.example.scutaru.service.ConnectionService;
 import com.example.scutaru.service.TSLService;
-import com.example.scutaru.utlis.Constants;
+import com.example.scutaru.utlis.MeasureUnitConstatnts;
 import com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException;
 
 @Service
 public class TSLServiceImpl implements TSLService {
 
-	private ConnectionService connectionService;
+	private final ConnectionService connectionService;
 
 	@Autowired
 	public TSLServiceImpl(ConnectionService connectionService) {
 		this.connectionService = connectionService;
 	}
-	
+
 	@Override
 	public List<TslDTO> getLigthReadings() throws IOException, UnsupportedBusNumberException, InterruptedException {
 
@@ -33,7 +33,7 @@ public class TSLServiceImpl implements TSLService {
 		dto.setInfraredSpectrum(this.getInputData().get(1));
 		dto.setVisibleSpectrum(this.getInputData().get(2));
 		dto.setTimeStamp(System.currentTimeMillis());
-		dto.setMeasureUnit(Constants.LIGHT_MEASURE_UNIT);
+		dto.setMeasureUnit(MeasureUnitConstatnts.LIGHT_MEASURE_UNIT);
 
 		lightValues.add(dto);
 

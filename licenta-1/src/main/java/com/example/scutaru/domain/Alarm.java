@@ -1,18 +1,35 @@
-package com.example.scutaru.dto;
+package com.example.scutaru.domain;
 
 import java.io.Serializable;
 
-public class AlarmDTO implements Serializable {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Alarm implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+
 	private String alarmLabel;
 	private String generatingEntity;
 	private String generatingValue;
 
-	public AlarmDTO() {
+	public Alarm() {
 		super();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getAlarmLabel() {
@@ -39,17 +56,9 @@ public class AlarmDTO implements Serializable {
 		this.generatingValue = generatingValue;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	@Override
 	public String toString() {
-		return "AlarmDTO [id=" + id + ", alarmLabel=" + alarmLabel + ", generatingEntity=" + generatingEntity
+		return "Alarm [id=" + id + ", alarmLabel=" + alarmLabel + ", generatingEntity=" + generatingEntity
 				+ ", generatingValue=" + generatingValue + "]";
 	}
 

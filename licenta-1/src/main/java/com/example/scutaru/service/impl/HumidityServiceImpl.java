@@ -10,14 +10,17 @@ import org.springframework.stereotype.Service;
 import com.example.scutaru.dto.HumidityDTO;
 import com.example.scutaru.service.ConnectionService;
 import com.example.scutaru.service.HumidityService;
-import com.example.scutaru.utlis.Constants;
+import com.example.scutaru.utlis.CommandConstants;
+import com.example.scutaru.utlis.MeasureUnitConstatnts;
+import com.example.scutaru.utlis.RegexConstants;
+import com.example.scutaru.utlis.SensorConstants;
 
 @Service
 public class HumidityServiceImpl implements HumidityService {
 
 	private String LINE;
 
-	private ConnectionService connectionService;
+	private final ConnectionService connectionService;
 
 	@Autowired
 	public HumidityServiceImpl(ConnectionService connectionService) {
@@ -27,7 +30,7 @@ public class HumidityServiceImpl implements HumidityService {
 	@Override
 	public List<HumidityDTO> getHumidity() throws IOException {
 
-		if ((LINE = connectionService.getLine(Constants.DHT11_COMMAND)) != null) {
+		if ((LINE = connectionService.getLine(CommandConstants.DHT11_COMMAND)) != null) {
 
 			List<HumidityDTO> humidityValues = new ArrayList<>();
 			humidityValues.add(this.setHumidityValue());
@@ -39,13 +42,13 @@ public class HumidityServiceImpl implements HumidityService {
 
 	private HumidityDTO setHumidityValue() {
 		String[] data;
-		data = LINE.split("   ");
+		data = LINE.split(RegexConstants.DHT11_COMMAND_REGEX);
 
 		HumidityDTO humidityDTO = new HumidityDTO();
 		humidityDTO.setValue(Double.parseDouble(data[1]));
-		humidityDTO.setSensorName(Constants.HUMIDITY_SENSOR_DHT11);
+		humidityDTO.setSensorName(SensorConstants.HUMIDITY_SENSOR_DHT11);
 		humidityDTO.setTimeStamp(System.currentTimeMillis());
-		humidityDTO.setMeasureUnit(Constants.HUMIDITY_MEASURE_UNIT);
+		humidityDTO.setMeasureUnit(MeasureUnitConstatnts.HUMIDITY_MEASURE_UNIT);
 
 		return humidityDTO;
 	}

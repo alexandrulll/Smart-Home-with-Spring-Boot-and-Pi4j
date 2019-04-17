@@ -1,8 +1,8 @@
-package com.example.scutaru.dto;
+package com.example.scutaru.domain;
 
 import java.io.Serializable;
 
-public class DustSensorDTO implements Serializable {
+public class DustSensor implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -13,7 +13,7 @@ public class DustSensorDTO implements Serializable {
 	private String voltageUnit;
 	private Long timeStamp;
 
-	public DustSensorDTO() {
+	public DustSensor() {
 		super();
 	}
 
@@ -67,8 +67,8 @@ public class DustSensorDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "DustSensorDTO [id=" + id + ", dustDesnsity=" + dustDesnsity + ", densityUnit=" + densityUnit
-				+ ", voltage=" + voltage + ", voltageUnit=" + voltageUnit + ", timeStamp=" + timeStamp + "]";
+		return "DustSensor [id=" + id + ", dustDesnsity=" + dustDesnsity + ", densityUnit=" + densityUnit + ", voltage="
+				+ voltage + ", voltageUnit=" + voltageUnit + ", timeStamp=" + timeStamp + "]";
 	}
 
 }

@@ -1,19 +1,36 @@
-package com.example.scutaru.dto;
+package com.example.scutaru.domain;
 
 import java.io.Serializable;
 
-public class HumidityDTO implements Serializable {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class Temperature implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+
 	private Double value;
 	private Long timeStamp;
 	private String sensorName;
 	private String measureUnit;
 
-	public HumidityDTO() {
+	public Temperature() {
 		super();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public Double getValue() {
@@ -48,17 +65,9 @@ public class HumidityDTO implements Serializable {
 		this.measureUnit = measureUnit;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	@Override
 	public String toString() {
-		return "HumidityDTO [id=" + id + ", value=" + value + ", timeStamp=" + timeStamp + ", sensorName=" + sensorName
+		return "Temperature [id=" + id + ", value=" + value + ", timeStamp=" + timeStamp + ", sensorName=" + sensorName
 				+ ", measureUnit=" + measureUnit + "]";
 	}
 

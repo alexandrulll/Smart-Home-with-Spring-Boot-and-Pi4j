@@ -6,6 +6,7 @@ public class TemperatureDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private Long id;
 	private Double value;
 	private Long timeStamp;
 	private String sensorName;
@@ -47,10 +48,18 @@ public class TemperatureDTO implements Serializable {
 		this.measureUnit = measureUnit;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	@Override
 	public String toString() {
-		return "TemperatureDTO [value=" + value + ", timeStamp=" + timeStamp + ", sensorName=" + sensorName
-				+ ", measureUnit=" + measureUnit + "]";
+		return "TemperatureDTO [id=" + id + ", value=" + value + ", timeStamp=" + timeStamp + ", sensorName="
+				+ sensorName + ", measureUnit=" + measureUnit + "]";
 	}
 
 }

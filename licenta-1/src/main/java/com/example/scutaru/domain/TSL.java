@@ -1,8 +1,8 @@
-package com.example.scutaru.dto;
+package com.example.scutaru.domain;
 
 import java.io.Serializable;
 
-public class TslDTO implements Serializable {
+public class TSL implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -13,7 +13,7 @@ public class TslDTO implements Serializable {
 	private Long timeStamp;
 	private String measureUnit;
 
-	public TslDTO() {
+	public TSL() {
 		super();
 	}
 
@@ -67,7 +67,7 @@ public class TslDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "TslDTO [id=" + id + ", fullSpectrum=" + fullSpectrum + ", infraredSpectrum=" + infraredSpectrum
+		return "TSL [id=" + id + ", fullSpectrum=" + fullSpectrum + ", infraredSpectrum=" + infraredSpectrum
 				+ ", visibleSpectrum=" + visibleSpectrum + ", timeStamp=" + timeStamp + ", measureUnit=" + measureUnit
 				+ "]";
 	}

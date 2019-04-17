@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import com.example.scutaru.dto.DustSensorDTO;
 import com.example.scutaru.service.ArduinoDustService;
 import com.example.scutaru.service.ConnectionService;
-import com.example.scutaru.utlis.Constants;
+import com.example.scutaru.utlis.CommandConstants;
+import com.example.scutaru.utlis.MeasureUnitConstatnts;
+import com.example.scutaru.utlis.RegexConstants;
 
 @Service
 public class ArduinoDustServiceImpl implements ArduinoDustService {
@@ -18,7 +20,7 @@ public class ArduinoDustServiceImpl implements ArduinoDustService {
 	private static String LINE;
 	private String[] data;
 
-	private ConnectionService connectionService;
+	private final ConnectionService connectionService;
 
 	@Autowired
 	public ArduinoDustServiceImpl(ConnectionService connectionService) {
@@ -30,14 +32,14 @@ public class ArduinoDustServiceImpl implements ArduinoDustService {
 
 		List<DustSensorDTO> dustValues = new ArrayList<>();
 
-		if ((LINE = connectionService.getLineForSerial(Constants.DUST_COMMAND)) != null) {
-			data = LINE.split(" ");
+		if ((LINE = connectionService.getLineForSerial(CommandConstants.DUST_COMMAND)) != null) {
+			data = LINE.split(RegexConstants.DUST_COMMAND_REGEX);
 
 			DustSensorDTO dustSensorDTO = new DustSensorDTO();
 			dustSensorDTO.setVoltage(Float.parseFloat(data[0]));
 			dustSensorDTO.setDustDesnsity(Float.parseFloat(data[1]));
-			dustSensorDTO.setDensityUnit(Constants.DENSITY_MEASURE_UNIT);
-			dustSensorDTO.setVoltageUnit(Constants.VOLTAGE_MEASURE_UNIT);
+			dustSensorDTO.setDensityUnit(MeasureUnitConstatnts.DENSITY_MEASURE_UNIT);
+			dustSensorDTO.setVoltageUnit(MeasureUnitConstatnts.VOLTAGE_MEASURE_UNIT);
 			dustSensorDTO.setTimeStamp(System.currentTimeMillis());
 
 			dustValues.add(dustSensorDTO);

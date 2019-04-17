@@ -10,10 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.scutaru.dto.AlarmDTO;
+import com.example.scutaru.domain.Temperature;
 import com.example.scutaru.dto.Dht11DTO;
 import com.example.scutaru.dto.HumidityDTO;
 import com.example.scutaru.dto.TemperatureDTO;
+import com.example.scutaru.repository.TemperatureRepository;
 import com.example.scutaru.service.DHT11Service;
 import com.example.scutaru.service.HumidityService;
 import com.example.scutaru.service.TemperatureService;
@@ -26,13 +27,15 @@ public class DHT11Controller {
 	private final DHT11Service dht11Service;
 	private final TemperatureService temperatureService;
 	private final HumidityService humidityService;
+	private final TemperatureRepository temperatureRepository;
 
 	@Autowired
 	public DHT11Controller(DHT11Service dht11Service, TemperatureService temperatureService,
-			HumidityService humidityService) {
+			HumidityService humidityService, TemperatureRepository temperatureRepository) {
 		this.dht11Service = dht11Service;
 		this.humidityService = humidityService;
 		this.temperatureService = temperatureService;
+		this.temperatureRepository = temperatureRepository;
 	}
 
 	@GetMapping("/temperature-humidity")
@@ -43,6 +46,13 @@ public class DHT11Controller {
 	}
 
 	@GetMapping("/temperature")
+	public ResponseEntity<List<Temperature>> getTemperatures()
+			throws UnsupportedBusNumberException, IOException, InterruptedException {
+
+		return new ResponseEntity<>(temperatureRepository.findAll(), HttpStatus.OK);
+	}
+
+	@GetMapping("/temperature/dto")
 	public ResponseEntity<List<TemperatureDTO>> getDHT11Temperature()
 			throws UnsupportedBusNumberException, IOException, InterruptedException {
 
@@ -56,10 +66,4 @@ public class DHT11Controller {
 		return new ResponseEntity<>(humidityService.getHumidity(), HttpStatus.OK);
 	}
 
-	@GetMapping("/alarms")
-	public ResponseEntity<List<AlarmDTO>> getAlarms()
-			throws UnsupportedBusNumberException, IOException, InterruptedException {
-
-		return new ResponseEntity<>(temperatureService.getAlarms(), HttpStatus.OK);
-	}
 }

@@ -26,7 +26,10 @@ public class ConnectionServiceImpl implements ConnectionService {
 	@Override
 	public String getLineForSerial(String command) throws IOException {
 
-		return this.getDataFromScript(command).lines().collect(Collectors.toList()).get(2);
+		return this.getDataFromScript(command)
+				   .lines()
+				   .collect(Collectors.toList())
+				   .get(2);
 
 	}
 
@@ -35,7 +38,7 @@ public class ConnectionServiceImpl implements ConnectionService {
 
 		return this.getDataFromScript(command).readLine();
 	}
-	
+
 	@Override
 	public I2CDevice getDevice(Integer integer) throws UnsupportedBusNumberException, IOException {
 
