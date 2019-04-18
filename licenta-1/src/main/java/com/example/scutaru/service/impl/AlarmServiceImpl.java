@@ -7,9 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.example.scutaru.domain.Alarm;
 import com.example.scutaru.repository.AlarmRepository;
+import com.example.scutaru.service.AlarmService;
 
 @Service
-public class AlarmServiceImpl {
+public class AlarmServiceImpl implements AlarmService{
 
 	private final AlarmRepository alarmRepository;
 
@@ -18,14 +19,17 @@ public class AlarmServiceImpl {
 		this.alarmRepository = alarmRepository;
 	}
 
+	@Override
 	public List<Alarm> findAllAlarms() {
 		return alarmRepository.findAll();
 	}
 
+	@Override
 	public Alarm findAlarmById(Long id) {
 		return alarmRepository.findOne(id);
 	}
 
+	@Override
 	public Alarm saveAlarm(Alarm alarm) {
 		return alarmRepository.save(alarm);
 	}

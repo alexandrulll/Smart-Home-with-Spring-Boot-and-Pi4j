@@ -9,10 +9,12 @@ import com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException;
 
 public interface TSLService {
 
-	TSL saveLigthReading() throws IOException, UnsupportedBusNumberException, InterruptedException;
+	TSL saveReading() throws IOException, UnsupportedBusNumberException, InterruptedException;
 
-	List<TSL> findAllLightReadings() throws IOException;
+	List<TSL> findAllReadings() throws IOException;
 
 	TslDTO getLastReading() throws IOException;
+
+	Double findValueForEntry() throws IOException, UnsupportedBusNumberException, InterruptedException;
 
 }

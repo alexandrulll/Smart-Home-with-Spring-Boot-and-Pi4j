@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.scutaru.domain.TSL;
 import com.example.scutaru.dto.TslDTO;
+import com.example.scutaru.service.AlarmCreationService;
 import com.example.scutaru.service.TSLService;
+import com.example.scutaru.utlis.AlarmThresholdConstants;
 import com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException;
 
 @RestController
@@ -20,30 +22,39 @@ import com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException;
 public class TSLController {
 
 	private final TSLService tslService;
+	private final AlarmCreationService alarmCreationService;
 
 	@Autowired
-	public TSLController(TSLService tslService) {
+	public TSLController(TSLService tslService, AlarmCreationService alarmCreationService) {
 		this.tslService = tslService;
+		this.alarmCreationService = alarmCreationService;
 	}
 
 	@GetMapping("/light/all")
 	public ResponseEntity<List<TSL>> findAllReadings()
 			throws UnsupportedBusNumberException, IOException, InterruptedException {
 
-		return new ResponseEntity<List<TSL>>(tslService.findAllLightReadings(), HttpStatus.OK);
+		return new ResponseEntity<List<TSL>>(tslService.findAllReadings(), HttpStatus.OK);
 
 	}
 
 	@GetMapping("/light/save")
-	public ResponseEntity<TSL> getLightReading()
+	public ResponseEntity<TSL> saveValue()
 			throws UnsupportedBusNumberException, IOException, InterruptedException {
 
-		return new ResponseEntity<TSL>(tslService.saveLigthReading(), HttpStatus.OK);
+		Double value = tslService.findValueForEntry();
+
+		if (value > AlarmThresholdConstants.MAJOR_Light_ALARM_THRESHOLD) {
+			alarmCreationService.createAlarmForLight(value);
+		}
+		
+		
+		return new ResponseEntity<TSL>(tslService.saveReading(), HttpStatus.OK);
 
 	}
 
 	@GetMapping("/light/dto")
-	public ResponseEntity<TslDTO> getLastLightReading()
+	public ResponseEntity<TslDTO> getLastReading()
 			throws UnsupportedBusNumberException, IOException, InterruptedException {
 
 		return new ResponseEntity<TslDTO>(tslService.getLastReading(), HttpStatus.OK);

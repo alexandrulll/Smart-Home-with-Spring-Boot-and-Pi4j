@@ -1,13 +1,15 @@
 package com.example.scutaru.service.impl;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.scutaru.converter.HumidityToHumidityDTOConverter;
+import com.example.scutaru.domain.Humidity;
 import com.example.scutaru.dto.HumidityDTO;
+import com.example.scutaru.repository.HumidityRepository;
 import com.example.scutaru.service.ConnectionService;
 import com.example.scutaru.service.HumidityService;
 import com.example.scutaru.utlis.CommandConstants;
@@ -18,39 +20,62 @@ import com.example.scutaru.utlis.SensorConstants;
 @Service
 public class HumidityServiceImpl implements HumidityService {
 
-	private String LINE;
+	private static String LINE;
+	private String[] data;
 
+	private final HumidityRepository humidityRepository;
+	private final HumidityToHumidityDTOConverter humidityToHumidityDTOConverter;
 	private final ConnectionService connectionService;
 
 	@Autowired
-	public HumidityServiceImpl(ConnectionService connectionService) {
+	public HumidityServiceImpl(HumidityRepository humidityRepository,
+			HumidityToHumidityDTOConverter humidityToHumidityDTOConverter, ConnectionService connectionService) {
+
+		this.humidityRepository = humidityRepository;
+		this.humidityToHumidityDTOConverter = humidityToHumidityDTOConverter;
 		this.connectionService = connectionService;
+	}
+	
+	@Override
+	public Double findValueForEntry() throws IOException {
+
+		return this.getEntry().getValue();
 	}
 
 	@Override
-	public List<HumidityDTO> getHumidity() throws IOException {
+	public List<Humidity> findAllReadings() throws IOException {
 
-		if ((LINE = connectionService.getLine(CommandConstants.DHT11_COMMAND)) != null) {
-
-			List<HumidityDTO> humidityValues = new ArrayList<>();
-			humidityValues.add(this.setHumidityValue());
-			return humidityValues;
-		}
-
-		return null;
+		return humidityRepository.findAll();
 	}
 
-	private HumidityDTO setHumidityValue() {
-		String[] data;
-		data = LINE.split(RegexConstants.DHT11_COMMAND_REGEX);
+	@Override
+	public HumidityDTO getLastReading() throws IOException {
 
-		HumidityDTO humidityDTO = new HumidityDTO();
-		humidityDTO.setValue(Double.parseDouble(data[1]));
-		humidityDTO.setSensorName(SensorConstants.HUMIDITY_SENSOR_DHT11);
-		humidityDTO.setTimeStamp(System.currentTimeMillis());
-		humidityDTO.setMeasureUnit(MeasureUnitConstatnts.HUMIDITY_MEASURE_UNIT);
+		Humidity humidity = humidityRepository.findFirstByOrderByIdDesc();
+		return humidityToHumidityDTOConverter.convert(humidity);
+	}
+	
+	@Override
+	public Humidity saveValue() throws NumberFormatException, IOException {
 
-		return humidityDTO;
+		return humidityRepository.save(this.getEntry());
+	}
+
+	private Humidity getEntry() throws NumberFormatException, IOException {
+
+		if ((LINE = connectionService.getLine(CommandConstants.DHT11_COMMAND)) != null) {
+			data = LINE.split(RegexConstants.DHT11_COMMAND_REGEX);
+
+			Humidity humidity = new Humidity();
+			humidity.setValue(Double.parseDouble(data[1]));
+			humidity.setSensorName(SensorConstants.HUMIDITY_SENSOR_DHT11);
+			humidity.setTimeStamp(System.currentTimeMillis());
+			humidity.setMeasureUnit(MeasureUnitConstatnts.HUMIDITY_MEASURE_UNIT);
+			
+			return humidity;
+
+		}
+		return null;
 	}
 
 }

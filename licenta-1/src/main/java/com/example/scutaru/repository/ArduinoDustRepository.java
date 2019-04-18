@@ -6,4 +6,5 @@ import com.example.scutaru.domain.DustSensor;
 
 public interface ArduinoDustRepository extends JpaRepository<DustSensor, Long> {
 
+	DustSensor findFirstByOrderByIdDesc();
 }

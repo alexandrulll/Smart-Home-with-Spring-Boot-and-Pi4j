@@ -8,7 +8,7 @@ import com.example.scutaru.dto.DustSensorDTO;
 
 public interface ArduinoDustService {
 
-	DustSensor getDustReadings() throws IOException;
+	DustSensor saveValue() throws IOException;
 
 	List<DustSensor> findAllDustReadings() throws IOException;
 

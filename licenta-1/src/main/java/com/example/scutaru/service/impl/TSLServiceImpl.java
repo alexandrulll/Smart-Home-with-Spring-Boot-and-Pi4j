@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.scutaru.converter.TslToTSLDTO;
+import com.example.scutaru.converter.TslToTSLDTOConverter;
 import com.example.scutaru.domain.TSL;
 import com.example.scutaru.dto.TslDTO;
 import com.example.scutaru.repository.TslRepository;
@@ -21,42 +21,55 @@ public class TSLServiceImpl implements TSLService {
 
 	private final ConnectionService connectionService;
 	private final TslRepository repository;
-	private final TslToTSLDTO converter;
+	private final TslToTSLDTOConverter converter;
 
 	@Autowired
-	public TSLServiceImpl(TslRepository repository, ConnectionService connectionService, TslToTSLDTO converter) {
+	public TSLServiceImpl(TslRepository repository, ConnectionService connectionService,
+			TslToTSLDTOConverter converter) {
 		this.connectionService = connectionService;
 		this.repository = repository;
 		this.converter = converter;
 	}
 	
 	@Override
-	public List<TSL> findAllLightReadings() throws IOException {
-		
+	public Double findValueForEntry() throws IOException, UnsupportedBusNumberException, InterruptedException {
+
+		return this.getEntry().getFullSpectrum();
+	}
+
+	@Override
+	public List<TSL> findAllReadings() throws IOException {
+
 		return repository.findAll();
 	}
 
 	@Override
 	public TslDTO getLastReading() throws IOException {
 
-		TSL tsl = repository.findAll().get(0);
+		TSL tsl = repository.findFirstByOrderByIdDesc();
 		return converter.convert(tsl);
 
 	}
 
 	@Override
-	public TSL saveLigthReading() throws IOException, UnsupportedBusNumberException, InterruptedException {
+	public TSL saveReading() throws IOException, UnsupportedBusNumberException, InterruptedException {
+
+		return repository.save(this.getEntry());
+
+	}
+
+	private TSL getEntry() throws IOException, UnsupportedBusNumberException, InterruptedException {
 
 		TSL tsl = new TSL();
-		
+
 		tsl.setFullSpectrum(this.getInputData().get(0));
 		tsl.setInfraredSpectrum(this.getInputData().get(1));
 		tsl.setVisibleSpectrum(this.getInputData().get(2));
 		tsl.setTimeStamp(System.currentTimeMillis());
 		tsl.setMeasureUnit(MeasureUnitConstatnts.LIGHT_MEASURE_UNIT);
 
-		return repository.save(tsl);
-		
+		return tsl;
+
 	}
 
 	private List<Double> getInputData() throws IOException, UnsupportedBusNumberException, InterruptedException {

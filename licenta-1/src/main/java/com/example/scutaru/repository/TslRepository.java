@@ -6,4 +6,5 @@ import com.example.scutaru.domain.TSL;
 
 public interface TslRepository extends JpaRepository<TSL, Long> {
 
+	TSL findFirstByOrderByIdDesc();
 }

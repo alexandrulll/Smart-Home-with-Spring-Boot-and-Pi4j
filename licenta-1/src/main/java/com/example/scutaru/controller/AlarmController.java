@@ -12,26 +12,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.scutaru.domain.Alarm;
 import com.example.scutaru.repository.AlarmRepository;
-import com.example.scutaru.service.TemperatureService;
 import com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException;
 
 @RestController
 @RequestMapping(value = "/alarms")
 public class AlarmController {
 
-	private final TemperatureService temperatureService;
 	private final AlarmRepository alarmRepository;
 
 	@Autowired
-	public AlarmController(TemperatureService temperatureService, AlarmRepository alarmRepository) {
-		this.temperatureService = temperatureService;
+	public AlarmController(AlarmRepository alarmRepository) {
 		this.alarmRepository = alarmRepository;
-	}
-
-	@GetMapping("/create")
-	public ResponseEntity<Alarm> getAlarms() throws UnsupportedBusNumberException, IOException, InterruptedException {
-
-		return new ResponseEntity<>(temperatureService.saveTemperatureAlarms(), HttpStatus.OK);
 	}
 
 	@GetMapping("")

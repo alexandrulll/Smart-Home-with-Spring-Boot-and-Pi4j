@@ -27,23 +27,23 @@ public class ArduinoDustController {
 	}
 
 	@GetMapping("/all")
-	public ResponseEntity<List<DustSensor>> getDustReadings()
+	public ResponseEntity<List<DustSensor>> getReadings()
 			throws UnsupportedBusNumberException, IOException, InterruptedException {
 
 		return new ResponseEntity<>(arduinoDustService.findAllDustReadings(), HttpStatus.OK);
 	}
 
 	@GetMapping("/dto")
-	public ResponseEntity<DustSensorDTO> getLastDustReading()
+	public ResponseEntity<DustSensorDTO> getLastReading()
 			throws UnsupportedBusNumberException, IOException, InterruptedException {
 
 		return new ResponseEntity<>(arduinoDustService.getLastReading(), HttpStatus.OK);
 	}
 
 	@GetMapping("")
-	public ResponseEntity<DustSensor> getDustReading()
+	public ResponseEntity<DustSensor> saveReading()
 			throws UnsupportedBusNumberException, IOException, InterruptedException {
 
-		return new ResponseEntity<>(arduinoDustService.getDustReadings(), HttpStatus.OK);
+		return new ResponseEntity<>(arduinoDustService.saveValue(), HttpStatus.OK);
 	}
 }

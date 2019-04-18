@@ -6,4 +6,6 @@ import com.example.scutaru.domain.Temperature;
 
 public interface TemperatureRepository extends JpaRepository<Temperature, Long> {
 
+	Temperature findFirstByOrderByIdDesc();
+
 }

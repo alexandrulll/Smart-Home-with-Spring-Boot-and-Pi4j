@@ -43,13 +43,13 @@ public class ArduinoDustServiceImpl implements ArduinoDustService {
 	@Override
 	public DustSensorDTO getLastReading() throws IOException {
 
-		DustSensor dustSensor = arduinoDustRepository.findAll().get(0);
+		DustSensor dustSensor = arduinoDustRepository.findFirstByOrderByIdDesc();
 		return dustSensorToDustSensorDTO.convert(dustSensor);
 
 	}
 
 	@Override
-	public DustSensor getDustReadings() throws IOException {
+	public DustSensor saveValue() throws IOException {
 
 		if ((LINE = connectionService.getLineForSerial(CommandConstants.DUST_COMMAND)) != null) {
 			data = LINE.split(RegexConstants.DUST_COMMAND_REGEX);
