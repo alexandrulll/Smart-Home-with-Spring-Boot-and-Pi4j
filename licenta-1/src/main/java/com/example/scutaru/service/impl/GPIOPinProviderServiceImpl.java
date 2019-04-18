@@ -39,16 +39,5 @@ public class GPIOPinProviderServiceImpl implements GPIOPinProviderService {
 
 		return digitalInput;
 	}
-	
-	@Override
-	public GpioPinDigitalInput provideDigitalInputPin() {
 
-		final GpioController gpioController = GpioFactory.getInstance();
-		final GpioPinDigitalInput digitalInput = gpioController .provisionDigitalInputPin((RaspiPin.GPIO_05), PinPullResistance.PULL_DOWN);
-
-		//gpioController.shutdown();
-		//gpioController.unprovisionPin(digitalInput);
-
-		return digitalInput;
-	}
 }

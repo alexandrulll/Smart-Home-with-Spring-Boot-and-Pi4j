@@ -9,5 +9,4 @@ public interface GPIOPinProviderService {
 
 	GpioPinDigitalInput provideDigitalInputPin(Integer gpioPin);
 
-	GpioPinDigitalInput provideDigitalInputPin();
 }

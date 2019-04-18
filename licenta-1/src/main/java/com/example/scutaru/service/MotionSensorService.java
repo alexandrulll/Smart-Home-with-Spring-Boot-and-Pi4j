@@ -1,8 +1,13 @@
 package com.example.scutaru.service;
 
+import java.util.List;
+
+import com.example.scutaru.domain.MotionSensor;
+
 public interface MotionSensorService {
 
-	void detectMotionAndGlowLED(Integer pirPin, Integer ledPin);
+	void detectMotionAndGlowLED();
 
-	//List<Integer> getMotions();
+	List<MotionSensor> findAll();
+
 }
