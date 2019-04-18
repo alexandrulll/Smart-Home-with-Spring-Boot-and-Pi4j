@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.scutaru.domain.DustSensor;
 import com.example.scutaru.dto.DustSensorDTO;
 import com.example.scutaru.service.ArduinoDustService;
 import com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException;
@@ -25,8 +26,22 @@ public class ArduinoDustController {
 		this.arduinoDustService = arduinoDustService;
 	}
 
+	@GetMapping("/all")
+	public ResponseEntity<List<DustSensor>> getDustReadings()
+			throws UnsupportedBusNumberException, IOException, InterruptedException {
+
+		return new ResponseEntity<>(arduinoDustService.findAllDustReadings(), HttpStatus.OK);
+	}
+
+	@GetMapping("/dto")
+	public ResponseEntity<DustSensorDTO> getLastDustReading()
+			throws UnsupportedBusNumberException, IOException, InterruptedException {
+
+		return new ResponseEntity<>(arduinoDustService.getLastReading(), HttpStatus.OK);
+	}
+
 	@GetMapping("")
-	public ResponseEntity<List<DustSensorDTO>> getDustReadings()
+	public ResponseEntity<DustSensor> getDustReading()
 			throws UnsupportedBusNumberException, IOException, InterruptedException {
 
 		return new ResponseEntity<>(arduinoDustService.getDustReadings(), HttpStatus.OK);

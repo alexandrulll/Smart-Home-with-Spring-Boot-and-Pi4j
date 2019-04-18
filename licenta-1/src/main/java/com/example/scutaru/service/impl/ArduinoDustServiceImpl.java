@@ -1,13 +1,15 @@
 package com.example.scutaru.service.impl;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.scutaru.converter.DustSensorToDustSensorDTO;
+import com.example.scutaru.domain.DustSensor;
 import com.example.scutaru.dto.DustSensorDTO;
+import com.example.scutaru.repository.ArduinoDustRepository;
 import com.example.scutaru.service.ArduinoDustService;
 import com.example.scutaru.service.ConnectionService;
 import com.example.scutaru.utlis.CommandConstants;
@@ -21,31 +23,49 @@ public class ArduinoDustServiceImpl implements ArduinoDustService {
 	private String[] data;
 
 	private final ConnectionService connectionService;
+	private final ArduinoDustRepository arduinoDustRepository;
+	private final DustSensorToDustSensorDTO dustSensorToDustSensorDTO;
 
 	@Autowired
-	public ArduinoDustServiceImpl(ConnectionService connectionService) {
+	public ArduinoDustServiceImpl(ConnectionService connectionService, ArduinoDustRepository arduinoDustRepository,
+			DustSensorToDustSensorDTO dustSensorToDustSensorDTO) {
 		this.connectionService = connectionService;
+		this.arduinoDustRepository = arduinoDustRepository;
+		this.dustSensorToDustSensorDTO = dustSensorToDustSensorDTO;
 	}
-	
-	@Override
-	public List<DustSensorDTO> getDustReadings() throws IOException {
 
-		List<DustSensorDTO> dustValues = new ArrayList<>();
+	@Override
+	public List<DustSensor> findAllDustReadings() throws IOException {
+		
+		return arduinoDustRepository.findAll();
+	}
+
+	@Override
+	public DustSensorDTO getLastReading() throws IOException {
+
+		DustSensor dustSensor = arduinoDustRepository.findAll().get(0);
+		return dustSensorToDustSensorDTO.convert(dustSensor);
+
+	}
+
+	@Override
+	public DustSensor getDustReadings() throws IOException {
 
 		if ((LINE = connectionService.getLineForSerial(CommandConstants.DUST_COMMAND)) != null) {
 			data = LINE.split(RegexConstants.DUST_COMMAND_REGEX);
 
-			DustSensorDTO dustSensorDTO = new DustSensorDTO();
-			dustSensorDTO.setVoltage(Float.parseFloat(data[0]));
-			dustSensorDTO.setDustDesnsity(Float.parseFloat(data[1]));
-			dustSensorDTO.setDensityUnit(MeasureUnitConstatnts.DENSITY_MEASURE_UNIT);
-			dustSensorDTO.setVoltageUnit(MeasureUnitConstatnts.VOLTAGE_MEASURE_UNIT);
-			dustSensorDTO.setTimeStamp(System.currentTimeMillis());
+			DustSensor dustSensor = new DustSensor();
+			
+			dustSensor.setVoltage(Float.parseFloat(data[0]));
+			dustSensor.setDustDesnsity(Float.parseFloat(data[1]));
+			dustSensor.setDensityUnit(MeasureUnitConstatnts.DENSITY_MEASURE_UNIT);
+			dustSensor.setVoltageUnit(MeasureUnitConstatnts.VOLTAGE_MEASURE_UNIT);
+			dustSensor.setTimeStamp(System.currentTimeMillis());
 
-			dustValues.add(dustSensorDTO);
+			return arduinoDustRepository.save(dustSensor);
 
-			return dustValues;
 		}
+
 		return null;
 	}
 
