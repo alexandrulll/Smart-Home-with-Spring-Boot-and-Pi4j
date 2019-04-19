@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -33,14 +34,14 @@ public class ArduinoDustController {
 		return new ResponseEntity<>(arduinoDustService.findAllDustReadings(), HttpStatus.OK);
 	}
 
-	@GetMapping("/dto")
+	@GetMapping("/last")
 	public ResponseEntity<DustSensorDTO> getLastReading()
 			throws UnsupportedBusNumberException, IOException, InterruptedException {
 
 		return new ResponseEntity<>(arduinoDustService.getLastReading(), HttpStatus.OK);
 	}
 
-	@GetMapping("")
+	@PostMapping("/save")
 	public ResponseEntity<DustSensor> saveReading()
 			throws UnsupportedBusNumberException, IOException, InterruptedException {
 

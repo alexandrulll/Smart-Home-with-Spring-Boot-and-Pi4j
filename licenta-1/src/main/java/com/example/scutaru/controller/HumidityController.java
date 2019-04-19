@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +31,7 @@ public class HumidityController {
 		this.alarmCreationService = alarmCreationService;
 	}
 
-	@GetMapping("/save")
+	@PostMapping("/save")
 	public ResponseEntity<Humidity> saveValue()
 			throws UnsupportedBusNumberException, IOException, InterruptedException {
 
@@ -39,7 +40,7 @@ public class HumidityController {
 		if (value > AlarmThresholdConstants.CRITICAL_HUMIDITY_ALARM_THRESHOLD) {
 			alarmCreationService.createAlarmForHumidity(value);
 		}
-		
+
 		return new ResponseEntity<>(humidityService.saveValue(), HttpStatus.OK);
 	}
 

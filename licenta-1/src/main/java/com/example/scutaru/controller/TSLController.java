@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,7 +31,7 @@ public class TSLController {
 		this.alarmCreationService = alarmCreationService;
 	}
 
-	@GetMapping("/light/all")
+	@GetMapping("/all")
 	public ResponseEntity<List<TSL>> findAllReadings()
 			throws UnsupportedBusNumberException, IOException, InterruptedException {
 
@@ -38,22 +39,20 @@ public class TSLController {
 
 	}
 
-	@GetMapping("/light/save")
-	public ResponseEntity<TSL> saveValue()
-			throws UnsupportedBusNumberException, IOException, InterruptedException {
+	@PostMapping("/save")
+	public ResponseEntity<TSL> saveValue() throws UnsupportedBusNumberException, IOException, InterruptedException {
 
 		Double value = tslService.findValueForEntry();
 
-		if (value > AlarmThresholdConstants.MAJOR_Light_ALARM_THRESHOLD) {
+		if (value > AlarmThresholdConstants.MAJOR_LIGHT_ALARM_THRESHOLD) {
 			alarmCreationService.createAlarmForLight(value);
 		}
-		
-		
+
 		return new ResponseEntity<TSL>(tslService.saveReading(), HttpStatus.OK);
 
 	}
 
-	@GetMapping("/light/dto")
+	@GetMapping("/dto")
 	public ResponseEntity<TslDTO> getLastReading()
 			throws UnsupportedBusNumberException, IOException, InterruptedException {
 

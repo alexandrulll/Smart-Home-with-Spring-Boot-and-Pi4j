@@ -31,7 +31,7 @@ public class MotionSensorController {
 		return;
 	}
 
-	@GetMapping("")
+	@GetMapping("/all")
 	public List<MotionSensor> getLastDHT11Values()
 			throws UnsupportedBusNumberException, IOException, InterruptedException {
 

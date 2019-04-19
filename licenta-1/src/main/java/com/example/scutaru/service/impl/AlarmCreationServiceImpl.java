@@ -12,8 +12,12 @@ import com.example.scutaru.utlis.AlarmGeneratingLabelConstants;
 @Service
 public class AlarmCreationServiceImpl implements AlarmCreationService {
 
+	private final AlarmRepository alarmRepository;
+
 	@Autowired
-	AlarmRepository alarmRepository;
+	public AlarmCreationServiceImpl(AlarmRepository alarmRepository) {
+		this.alarmRepository = alarmRepository;
+	}
 
 	@Override
 	public Alarm createAlarmForTemperature(Double value) {

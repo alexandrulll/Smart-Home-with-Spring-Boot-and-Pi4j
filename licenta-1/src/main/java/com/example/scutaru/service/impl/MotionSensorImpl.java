@@ -23,15 +23,19 @@ import com.pi4j.wiringpi.GpioUtil;
 @Service
 public class MotionSensorImpl implements MotionSensorService {
 
-	
+	private final MotionRepository motionRepository;
+
 	@Autowired
-	MotionRepository motionRepository;
-	
+	public MotionSensorImpl(MotionRepository motionRepository) {
+		this.motionRepository = motionRepository;
+
+	}
+
 	@Override
-	public List<MotionSensor> findAll(){
+	public List<MotionSensor> findAll() {
 		return motionRepository.findAll();
 	}
-	
+
 	@Override
 	public void detectMotionAndGlowLED() {
 
@@ -50,12 +54,12 @@ public class MotionSensorImpl implements MotionSensorService {
 			public void handleGpioPinDigitalStateChangeEvent(GpioPinDigitalStateChangeEvent event) {
 
 				if (event.getState().isHigh()) {
-					
+
 					MotionSensor motionSensor = new MotionSensor();
 					motionSensor.setTimeStamp(System.currentTimeMillis());
 					motionSensor.setAlertText(SensorConstants.PIR_SENSOR);
 					motionRepository.save(motionSensor);
-		
+
 					led.high();
 				}
 
