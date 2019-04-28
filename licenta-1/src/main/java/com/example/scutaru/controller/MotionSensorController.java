@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,7 +23,7 @@ public class MotionSensorController {
 		this.motionSensorService = motionSensorService;
 	}
 
-	@PostMapping("/start")
+	@GetMapping("/start")
 	public void startMotionSensor() throws UnsupportedBusNumberException, IOException, InterruptedException {
 
 		motionSensorService.detectMotionAndGlowLED();
@@ -32,10 +31,17 @@ public class MotionSensorController {
 	}
 
 	@GetMapping("/all")
-	public List<MotionSensor> getLastDHT11Values()
+	public List<MotionSensor> getIntruderList()
 			throws UnsupportedBusNumberException, IOException, InterruptedException {
 
 		return motionSensorService.findAll();
+
+	}
+
+	@GetMapping("/latest")
+	public MotionSensor getLastEntry() throws UnsupportedBusNumberException, IOException, InterruptedException {
+
+		return motionSensorService.findLatest();
 
 	}
 }

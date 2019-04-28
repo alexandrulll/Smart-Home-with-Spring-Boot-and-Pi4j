@@ -10,4 +10,6 @@ public interface MotionSensorService {
 
 	List<MotionSensor> findAll();
 
+	MotionSensor findLatest();
+
 }

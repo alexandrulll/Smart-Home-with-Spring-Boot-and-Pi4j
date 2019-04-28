@@ -6,4 +6,5 @@ import com.example.scutaru.domain.MotionSensor;
 
 public interface MotionRepository extends JpaRepository<MotionSensor, Long>{
 
+	MotionSensor findFirstByOrderByIdDesc();
 }

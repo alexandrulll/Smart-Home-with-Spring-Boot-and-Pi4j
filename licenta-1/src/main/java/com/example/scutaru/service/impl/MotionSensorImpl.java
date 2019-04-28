@@ -32,7 +32,14 @@ public class MotionSensorImpl implements MotionSensorService {
 	}
 
 	@Override
+	public MotionSensor findLatest() {
+
+		return motionRepository.findFirstByOrderByIdDesc();
+	}
+
+	@Override
 	public List<MotionSensor> findAll() {
+
 		return motionRepository.findAll();
 	}
 
