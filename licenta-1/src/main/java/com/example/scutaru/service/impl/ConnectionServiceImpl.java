@@ -17,6 +17,12 @@ import com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException;
 public class ConnectionServiceImpl implements ConnectionService {
 
 	@Override
+	public String getLine(String command) throws IOException {
+
+		return this.getDataFromScript(command).readLine();
+	}
+	
+	@Override
 	public BufferedReader getDataFromScript(String command) throws IOException {
 
 		Process process = Runtime.getRuntime().exec(command);
@@ -31,12 +37,6 @@ public class ConnectionServiceImpl implements ConnectionService {
 				   .collect(Collectors.toList())
 				   .get(2);
 
-	}
-
-	@Override
-	public String getLine(String command) throws IOException {
-
-		return this.getDataFromScript(command).readLine();
 	}
 
 	@Override
