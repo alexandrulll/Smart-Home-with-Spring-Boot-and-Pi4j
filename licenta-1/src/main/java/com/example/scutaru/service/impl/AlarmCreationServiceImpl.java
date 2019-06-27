@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.scutaru.domain.Alarm;
 import com.example.scutaru.repository.AlarmRepository;
+import com.example.scutaru.repository.TemperatureAlarmConfigRepository;
 import com.example.scutaru.service.AlarmCreationService;
 import com.example.scutaru.utlis.AlarmGeneratingEntityConstants;
 import com.example.scutaru.utlis.AlarmGeneratingLabelConstants;
@@ -13,10 +14,13 @@ import com.example.scutaru.utlis.AlarmGeneratingLabelConstants;
 public class AlarmCreationServiceImpl implements AlarmCreationService {
 
 	private final AlarmRepository alarmRepository;
+	private final TemperatureAlarmConfigRepository temperatureAlarmConfigRepository;
 
 	@Autowired
-	public AlarmCreationServiceImpl(AlarmRepository alarmRepository) {
+	public AlarmCreationServiceImpl(AlarmRepository alarmRepository, 
+			TemperatureAlarmConfigRepository temperatureAlarmConfigRepository) {
 		this.alarmRepository = alarmRepository;
+		this.temperatureAlarmConfigRepository = temperatureAlarmConfigRepository;
 	}
 
 	@Override
@@ -24,8 +28,8 @@ public class AlarmCreationServiceImpl implements AlarmCreationService {
 		Alarm alarm = new Alarm();
 
 		alarm.setGeneratingValue(String.valueOf(value));
-		alarm.setGeneratingEntity(AlarmGeneratingEntityConstants.TEMPERATURE);
-		alarm.setAlarmLabel(AlarmGeneratingLabelConstants.MINOR);
+		alarm.setGeneratingEntity(temperatureAlarmConfigRepository.findAll().get(0).getGeneratingEntity());
+		alarm.setAlarmLabel(temperatureAlarmConfigRepository.findAll().get(0).getAlarmLabel());
 
 		return alarmRepository.save(alarm);
 
