@@ -2,12 +2,15 @@ package com.example.scutaru.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "light")
 public class TSL implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -16,10 +19,19 @@ public class TSL implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	@Column(name = "full_spectrum")
 	private Double fullSpectrum;
+	
+	@Column(name = "infrared_spectrum")
 	private Double infraredSpectrum;
+	
+	@Column(name = "visible_spectrum")
 	private Double visibleSpectrum;
+	
+	@Column(name = "timeStamp")
 	private Long timeStamp;
+	
+	@Column(name = "measure_unit")
 	private String measureUnit;
 
 	public TSL() {

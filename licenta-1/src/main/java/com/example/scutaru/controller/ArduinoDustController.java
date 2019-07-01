@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.scutaru.domain.DustSensor;
 import com.example.scutaru.dto.DustSensorDTO;
+import com.example.scutaru.service.AlarmCreationService;
 import com.example.scutaru.service.ArduinoDustService;
+import com.example.scutaru.utlis.AlarmThresholdConstants;
 import com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException;
 
 @RestController
@@ -20,10 +22,13 @@ import com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException;
 public class ArduinoDustController {
 
 	private final ArduinoDustService arduinoDustService;
+	private final AlarmCreationService alarmCreationService;
 
 	@Autowired
-	public ArduinoDustController(ArduinoDustService arduinoDustService) {
+	public ArduinoDustController(ArduinoDustService arduinoDustService,
+								AlarmCreationService alarmCreationService) {
 		this.arduinoDustService = arduinoDustService;
+		this.alarmCreationService = alarmCreationService;
 	}
 
 	@GetMapping("/all")
@@ -44,6 +49,12 @@ public class ArduinoDustController {
 	public ResponseEntity<DustSensor> saveReading()
 			throws UnsupportedBusNumberException, IOException, InterruptedException {
 
+		Float value = arduinoDustService.saveValue().getDustDesnsity();
+		
+		if (value > AlarmThresholdConstants.MAJOR_DUST_ALARM_THRESHOLD) {
+			alarmCreationService.createAlarmForDust(value);
+		}
+		
 		return new ResponseEntity<>(arduinoDustService.saveValue(), HttpStatus.OK);
 	}
 }

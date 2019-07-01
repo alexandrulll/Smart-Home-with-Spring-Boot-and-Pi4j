@@ -10,4 +10,6 @@ public interface AlarmCreationService {
 
 	Alarm createAlarmForLight(Double value);
 
+	Alarm createAlarmForDust(Float value);
+
 }

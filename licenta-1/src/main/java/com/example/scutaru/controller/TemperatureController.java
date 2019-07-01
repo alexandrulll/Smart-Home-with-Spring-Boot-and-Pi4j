@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.scutaru.domain.Temperature;
 import com.example.scutaru.dto.TemperatureDTO;
-import com.example.scutaru.repository.TemperatureAlarmConfigRepository;
 import com.example.scutaru.service.AlarmCreationService;
+import com.example.scutaru.service.AlarmService;
 import com.example.scutaru.service.TemperatureService;
 import com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException;
 
@@ -23,14 +23,14 @@ public class TemperatureController {
 
 	private final TemperatureService temperatureService;
 	private final AlarmCreationService alarmCreationService;
-	private final TemperatureAlarmConfigRepository temperatureAlarmConfigRepository;
+	private final AlarmService alarmService;
 
 	@Autowired
 	public TemperatureController(TemperatureService temperatureService, AlarmCreationService alarmCreationService,
-						TemperatureAlarmConfigRepository temperatureAlarmConfigRepository) {
+								AlarmService alarmService) {
 		this.temperatureService = temperatureService;
 		this.alarmCreationService = alarmCreationService;
-		this.temperatureAlarmConfigRepository = temperatureAlarmConfigRepository;
+		this.alarmService = alarmService;
 	}
 
 	@GetMapping("/all")
@@ -53,7 +53,7 @@ public class TemperatureController {
 
 		Double value = temperatureService.findValueForEntry();
 
-		if (value > temperatureAlarmConfigRepository.findAll().get(0).getValue()) {
+		if (value > alarmService.getLastTempConfig().getValue()) {
 			alarmCreationService.createAlarmForTemperature(value);
 		}
 		return new ResponseEntity<>(temperatureService.saveValue(), HttpStatus.OK);

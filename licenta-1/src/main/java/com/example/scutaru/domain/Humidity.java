@@ -2,12 +2,15 @@ package com.example.scutaru.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "humidity")
 public class Humidity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -16,9 +19,16 @@ public class Humidity implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@Column(name = "value")
 	private Double value;
+	
+	@Column(name = "timeStamp")
 	private Long timeStamp;
+	
+	@Column(name = "sensor_name")
 	private String sensorName;
+	
+	@Column(name = "measure_unit")
 	private String measureUnit;
 
 	public Humidity() {

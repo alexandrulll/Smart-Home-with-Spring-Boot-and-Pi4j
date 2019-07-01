@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.scutaru.domain.Alarm;
 import com.example.scutaru.dto.DustAlarmConfig;
-import com.example.scutaru.dto.TemperatureAlarmConfig;
-import com.example.scutaru.repository.TemperatureAlarmConfigRepository;
+import com.example.scutaru.dto.TemperatureAlarmConfigDTO;
 import com.example.scutaru.service.AlarmService;
 import com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException;
 
@@ -23,13 +22,10 @@ import com.pi4j.io.i2c.I2CFactory.UnsupportedBusNumberException;
 public class AlarmController {
 
 	private final AlarmService alarmService;
-	private final TemperatureAlarmConfigRepository temperatureAlarmConfigRepository;
 
 	@Autowired
-	public AlarmController(AlarmService alarmService, 
-					TemperatureAlarmConfigRepository temperatureAlarmConfigRepository) {
+	public AlarmController(AlarmService alarmService) {
 		this.alarmService = alarmService;
-		this.temperatureAlarmConfigRepository = temperatureAlarmConfigRepository;
 	}
 
 	@GetMapping("")
@@ -39,16 +35,11 @@ public class AlarmController {
 	}
 	
 	@PostMapping("/config")
-	public ResponseEntity<TemperatureAlarmConfig> saveTemperatureConfig(TemperatureAlarmConfig temperatureAlarmConfig) {
-
-		return new ResponseEntity<>(temperatureAlarmConfigRepository.save(temperatureAlarmConfig), HttpStatus.ACCEPTED);
+	public ResponseEntity<TemperatureAlarmConfigDTO> saveTemperatureConfig(TemperatureAlarmConfigDTO temperatureAlarmConfig) {
+		alarmService.saveTemperatureAlarmConfig(temperatureAlarmConfig);
+		return new ResponseEntity<>(HttpStatus.ACCEPTED);
 	}
 	
-	@GetMapping("/config/dust/all")
-	public ResponseEntity<List<DustAlarmConfig>> findAllDustConfig(DustAlarmConfig dustAlarmConfig) {
-		
-		return new ResponseEntity<>(alarmService.findAllDustConfig(), HttpStatus.OK);
-	}
 	
 	@PostMapping("/config/dust")
 	public ResponseEntity<DustAlarmConfig> saveDustConfig(DustAlarmConfig dustAlarmConfig) {
@@ -56,9 +47,4 @@ public class AlarmController {
 		return new ResponseEntity<>(HttpStatus.ACCEPTED);
 	}
 	
-	@GetMapping("/config/all")
-	public ResponseEntity<List<TemperatureAlarmConfig>> getAll() {
-
-		return new ResponseEntity<>(temperatureAlarmConfigRepository.findAll(), HttpStatus.OK);
-	}
 }

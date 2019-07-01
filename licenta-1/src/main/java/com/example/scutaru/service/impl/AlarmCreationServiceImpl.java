@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.example.scutaru.domain.Alarm;
 import com.example.scutaru.repository.AlarmRepository;
-import com.example.scutaru.repository.TemperatureAlarmConfigRepository;
 import com.example.scutaru.service.AlarmCreationService;
+import com.example.scutaru.service.AlarmService;
 import com.example.scutaru.utlis.AlarmGeneratingEntityConstants;
 import com.example.scutaru.utlis.AlarmGeneratingLabelConstants;
 
@@ -14,13 +14,12 @@ import com.example.scutaru.utlis.AlarmGeneratingLabelConstants;
 public class AlarmCreationServiceImpl implements AlarmCreationService {
 
 	private final AlarmRepository alarmRepository;
-	private final TemperatureAlarmConfigRepository temperatureAlarmConfigRepository;
-
+	private final AlarmService alarmService;
+	
 	@Autowired
-	public AlarmCreationServiceImpl(AlarmRepository alarmRepository, 
-			TemperatureAlarmConfigRepository temperatureAlarmConfigRepository) {
+	public AlarmCreationServiceImpl(AlarmRepository alarmRepository, AlarmService alarmService) {
 		this.alarmRepository = alarmRepository;
-		this.temperatureAlarmConfigRepository = temperatureAlarmConfigRepository;
+		this.alarmService = alarmService;
 	}
 
 	@Override
@@ -28,8 +27,20 @@ public class AlarmCreationServiceImpl implements AlarmCreationService {
 		Alarm alarm = new Alarm();
 
 		alarm.setGeneratingValue(String.valueOf(value));
-		alarm.setGeneratingEntity(temperatureAlarmConfigRepository.findAll().get(0).getGeneratingEntity());
-		alarm.setAlarmLabel(temperatureAlarmConfigRepository.findAll().get(0).getAlarmLabel());
+		alarm.setGeneratingEntity(alarmService.getLastTempConfig().getGeneratingEntity());
+		alarm.setAlarmLabel(alarmService.getLastTempConfig().getAlarmLabel());
+
+		return alarmRepository.save(alarm);
+
+	}
+	
+	@Override
+	public Alarm createAlarmForDust(Float value) {
+		Alarm alarm = new Alarm();
+
+		alarm.setGeneratingValue(String.valueOf(value));
+		alarm.setGeneratingEntity(AlarmGeneratingEntityConstants.DUST);
+		alarm.setAlarmLabel(AlarmGeneratingLabelConstants.MAJOR);
 
 		return alarmRepository.save(alarm);
 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.scutaru.domain.Alarm;
 import com.example.scutaru.dto.DustAlarmConfig;
+import com.example.scutaru.dto.TemperatureAlarmConfigDTO;
 
 public interface AlarmService {
 
@@ -14,7 +15,11 @@ public interface AlarmService {
 	Alarm saveAlarm(Alarm alarm);
 
 	Boolean saveDustAlarmConfig(DustAlarmConfig dustAlarmConfig);
+	
+	Boolean saveTemperatureAlarmConfig(TemperatureAlarmConfigDTO temperatureAlarmConfigDTO);
 
-	List<DustAlarmConfig> findAllDustConfig();
+	TemperatureAlarmConfigDTO getLastTempConfig();
+
+	DustAlarmConfig getLastDustConfig();
 
 }
